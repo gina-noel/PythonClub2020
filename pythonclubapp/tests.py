@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Meeting, MeetingMinutes, Event, Resource
+from .forms import MeetingForm, ResourceForm
 
 # Create your tests here.
 class MeetingTest(TestCase):
@@ -43,3 +44,23 @@ class EventTest(TestCase):
 
     def test_tablename(self):
         self.assertEqual(str(Event._meta.db_table), 'event')
+
+class NewResourceForm(TestCase):
+    # valid form data
+    def test_resourceform(self):
+        form=ResourceForm (data={'resourcename':'testName', 'resourcetype':'testType', 'resourceurl':'testURL', 'resourcedateentered':'2022-02-28', 'userid':'testUser', 'resourcedescription':'testDescription'})
+        self.assertTrue(form.is_valid)
+
+class NewMeetingForm(TestCase):
+    # valid form data
+    def test_meetingform(self):
+        data={
+            'meetingtitle':'testTitle', 
+            'meetingdate':'2022-02-28', 
+            'meetingtime':'12:00:00', 
+            'meetinglocation':'testLocation', 
+            'meetingagenda':'testAgenda'
+            }
+        form=MeetingForm (data)
+        self.assertTrue(form.is_valid)
+
